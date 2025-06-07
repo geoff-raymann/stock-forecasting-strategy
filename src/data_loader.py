@@ -30,7 +30,7 @@ def fetch_stock_data(ticker: str, start_date: str, end_date: str, save_csv: bool
 
     if save_csv:
         os.makedirs(data_dir, exist_ok=True)
-        file_path = os.path.join(data_dir, f"{ticker}_stock_data.csv")
+        file_path = os.path.join(data_dir, f"{ticker}.csv")
         df.to_csv(file_path, index=False)
         print(f"Saved {ticker} data to {file_path}")
 
