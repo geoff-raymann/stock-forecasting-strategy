@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def load_stock_data(
-    data_path="../data/",
+    data_path="data/",
     tickers=None,
     price_column="Close",
     dropna=True,

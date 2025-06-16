@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.stattools import adfuller
 
-def load_stock_data(ticker="AAPL", data_path="../data/"):
+def load_stock_data(ticker="AAPL", data_path="data/"):
     """
     Load stock data for a given ticker from CSV files.
     
@@ -101,4 +101,4 @@ def main(ticker="AAPL", forecast_days=30, arima_order=(1, 1, 1), data_path="../d
 
 if __name__ == "__main__":
     # You can change these values as needed
-    main(ticker="MSFT", forecast_days=30, arima_order=(1, 1, 1), data_path="../data/")
+    main(ticker="MSFT", forecast_days=30, arima_order=(1, 1, 1), data_path="data/")
