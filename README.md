@@ -1,109 +1,133 @@
-<<<<<<< HEAD
-# stock-forecasting-strategy
-=======
 # 📈 Stock Price Forecasting & Investment Strategy
 
-This project analyzes historical stock data to forecast future prices and simulate investment strategies. It leverages both statistical (ARIMA) and deep learning (LSTM) models, coupled with Monte Carlo simulations to evaluate risk and return over time.
+This project builds a robust stock price forecasting and risk analysis tool using ARIMA, LSTM, and Prophet models. It supports investment decision-making through Monte Carlo simulations based on Geometric Brownian Motion (GBM) and offers an interactive dashboard for analysis.
 
 ---
 
-## 📌 Project Objectives
+## 🧠 Objectives
 
-- Forecast stock prices using **ARIMA/SARIMA** and **LSTM** models.
-- Simulate future price movements and portfolio growth using **Monte Carlo simulations**.
-- Evaluate performance using financial metrics such as **Sharpe Ratio**, **VaR**, and **volatility**.
-- Provide actionable investment recommendations and visualize results in a **dashboard**.
-
----
-
-## 🛠️ Tech Stack
-
-| Category         | Tools/Libraries                               |
-|------------------|------------------------------------------------|
-| Data Handling    | `pandas`, `numpy`, `yfinance`                 |
-| Visualization    | `matplotlib`, `seaborn`, `plotly`             |
-| Forecasting      | `statsmodels`, `tensorflow/keras`             |
-| Simulation       | `numpy`, `scipy`                              |
-| Dashboard        | `streamlit`                                   |
-| Development      | `Jupyter`, `VS Code`, `Git/GitHub`            |
+- Forecast the next **30–60 trading days** of a selected stock (e.g., AAPL).
+- Evaluate and compare **ARIMA**, **LSTM**, and **Prophet** forecasting models.
+- Run **Monte Carlo simulations** to model price evolution and investment risk.
+- Deploy a dashboard for **interactive forecasting and simulation**.
 
 ---
 
-## 📁 Repository Structure
+## 🛠️ Technologies Used
 
+- **Language**: Python 3.10+
+- **Libraries**: 
+  - Data Handling: `pandas`, `numpy`
+  - Modeling: `statsmodels`, `tensorflow`, `keras`, `prophet`
+  - Visualization: `matplotlib`, `seaborn`, `plotly`
+  - Evaluation: `sklearn.metrics`
+- **Deployment**: Streamlit or Dash (TBD)
+- **Notebook**: Jupyter for exploratory analysis
+
+---
+
+## 🗂️ Project Structure
+
+```plaintext
 stock-forecasting-strategy/
-│
-├── data/ # Raw and processed datasets
-├── notebooks/ # Jupyter notebooks for analysis
-├── src/ # Reusable Python scripts
-├── reports/ # Summary reports & visual assets
-├── dashboard/ # Streamlit or Dash app
-├── README.md # Project overview
-├── requirements.txt # List of dependencies
-└── environment.yml # (optional) Conda environment setup
+├── data/               # Input CSV files (e.g. AAPL.csv)
+├── src/
+│   ├── arima_model.py
+│   ├── lstm_model.py
+│   ├── prophet_model.py
+│   ├── evaluate_models.py
+│   └── monte_carlo_simulation.py
+├── results/            # Forecasts, metrics, and generated plots
+├── notebooks/          # Jupyter notebooks for prototyping
+├── app/                # Streamlit or Dash app code
+└── README.md
+🚀 Getting Started
+1. Clone the Repository
 
-yaml
-Copy
-Edit
-
----
-
-## 🧠 Key Concepts
-
-- **Log Returns & Volatility**: Capturing price movement behavior.
-- **ARIMA/SARIMA**: Statistical forecasting of time series.
-- **LSTM**: Neural network capable of learning long-term dependencies in time series.
-- **Monte Carlo Simulation**: Modeling thousands of potential investment outcomes.
-- **Sharpe Ratio & VaR**: Measuring risk-adjusted returns and downside risk.
-
----
-
-## 🚀 How to Run
-
-### 1. Clone the Repository
-```bash
 git clone https://github.com/your-username/stock-forecasting-strategy.git
 cd stock-forecasting-strategy
-2. Install Dependencies
+2. Create Virtual Environment
+
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+3. Install Dependencies
 
 pip install -r requirements.txt
-Or with Conda:
+ℹ️ Note: Ensure Prophet installs correctly. You may need pystan and cmdstanpy.
 
-conda env create -f environment.yml
-conda activate stock-forecast-env
-3. Run Notebooks
-Navigate to the notebooks/ folder and open notebooks sequentially.
+📊 How to Use
+Train & Forecast
+Run any of the model scripts individually:
 
-4. Launch Dashboard
 
-cd dashboard
-streamlit run app.py
+python src/arima_model.py
+python src/lstm_model.py
+python src/prophet_model.py
+Evaluate Model Accuracy
 
-📊 Example Outputs
-Price trend forecasts with confidence intervals
+python src/evaluate_models.py
+Run Monte Carlo Simulation
 
-Risk-return tradeoff charts
+python src/monte_carlo_simulation.py
+📈 Forecasting Models
+Model	Description	Strengths
+ARIMA	Time-series with trend/seasonality	Strong for linear and stationary data
+LSTM	Recurrent neural network	Captures long-term dependencies, nonlinear
+Prophet	Additive model from Meta/Facebook	Handles holidays, missing data, trends
 
-Strategy recommendation summary
+🎲 Monte Carlo Simulation
+Uses Geometric Brownian Motion (GBM) to simulate thousands of possible future price paths. Outputs include:
 
-Interactive dashboard for model comparisons
+Price distribution histograms
 
-✅ To-Do
- Finalize ARIMA model tuning
+VaR (Value at Risk)
 
- Train & evaluate LSTM model
+Expected returns & volatility
 
- Complete Monte Carlo simulator
+📊 Dashboard Features (Coming Soon)
+Ticker symbol input (e.g., AAPL)
 
- Build and publish Streamlit dashboard
+Forecast chart with model comparison
 
- Write blog post on project learnings
+Monte Carlo simulation interface
 
-👤 Author
-Geoffrey Odiwour
-📧 odiwuorgeoff50@gmail.com
-🔗 LinkedIn | Portfolio
+Investment risk-adjustment slider
+
+Export forecasts & visualizations
+
+✅ Evaluation Metrics
+Metric	Description
+MAE	Mean Absolute Error
+MSE	Mean Squared Error
+RMSE	Root Mean Squared Error
+
+All models are benchmarked using a unified evaluate_models.py script.
+
+📌 TODOs
+ Model forecasts (ARIMA, LSTM, Prophet)
+
+ Centralized evaluation script
+
+ Monte Carlo simulation
+
+ Streamlit/Dash dashboard
+
+ Ticker selection and forecasting range UI
+
+ Dockerize for deployment
+
+📚 References
+Yahoo Finance API
+
+Geometric Brownian Motion - Investopedia
+
+Facebook Prophet Docs
+
+👨‍💻 Author
+Geoffrey Odiwuor
+ALX Data Science Graduate | Portfolio Project – 2025
+LinkedIn | GitHub
 
 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
->>>>>>> 6f52f8f (Initial Commit)
+MIT License – See LICENSE for details.
+
