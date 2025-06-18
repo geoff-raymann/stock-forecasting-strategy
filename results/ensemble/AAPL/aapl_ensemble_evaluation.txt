@@ -1,0 +1,8 @@
+📊 Evaluation for Ensemble
+------------------------------
+MODEL : Ensemble_AAPL
+MAE   : 3.7879
+MSE   : 20.7769
+RMSE  : 4.5582
+
+Saved on 2025-06-18 16:07:35

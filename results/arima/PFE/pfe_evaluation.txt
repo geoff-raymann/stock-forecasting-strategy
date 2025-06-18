@@ -1,0 +1,8 @@
+📊 Evaluation for ARIMA
+------------------------------
+MODEL : ARIMA_PFE
+MAE   : 0.5243
+MSE   : 0.4617
+RMSE  : 0.6795
+
+Saved on 2025-06-18 15:44:38

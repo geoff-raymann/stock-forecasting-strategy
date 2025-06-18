@@ -1,0 +1,8 @@
+📊 Evaluation for Stacking Ensemble
+------------------------------
+MODEL : Ensemble_AAPL
+MAE   : 4.0723
+MSE   : 24.3553
+RMSE  : 4.9351
+
+Saved on 2025-06-18 16:39:27

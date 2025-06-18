@@ -1,0 +1,13 @@
+dataset:
+  path: ../data/TSLA.csv
+  date_col: Ticker
+  value_col: TSLA.3
+  freq: B   # <-- Add this line: 'B' = business day frequency
+
+model:
+  sequence_length: 60
+  epochs: 100
+  batch_size: 32
+
+output:
+  dir: ../results/tsla_lstm

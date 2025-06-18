@@ -1,0 +1,9 @@
+
+📊 Evaluation for XGBoost
+------------------------------
+MODEL : XGBoost_AAPL
+MAE   : 2.5331
+MSE   : 12.3552
+RMSE  : 3.5150
+
+Saved on 2025-06-18 15:28:58

@@ -1,0 +1,9 @@
+
+📊 Evaluation for XGBoost
+------------------------------
+MODEL : XGBoost_MSFT
+MAE   : 7.2411
+MSE   : 89.4379
+RMSE  : 9.4572
+
+Saved on 2025-06-18 15:35:54

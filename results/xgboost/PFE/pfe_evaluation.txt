@@ -1,0 +1,9 @@
+
+📊 Evaluation for XGBoost
+------------------------------
+MODEL : XGBoost_PFE
+MAE   : 0.5877
+MSE   : 0.5188
+RMSE  : 0.7203
+
+Saved on 2025-06-18 15:38:44

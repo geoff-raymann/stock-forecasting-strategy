@@ -1,31 +1,25 @@
-# src/lstm_model.py
+# src/xgboost_model.py
 
 import os
 import sys
-import warnings
 import argparse
+import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.preprocessing import StandardScaler
+from xgboost import XGBRegressor
 
-from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense
-from tensorflow.keras.callbacks import EarlyStopping
-
-# Add path to evaluation module
+# Add path to evaluation utils
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 from evaluate_models import evaluate_forecast, print_evaluation
 
 # === CONFIG DEFAULTS ===
 DEFAULT_TICKER = 'AAPL'
 DEFAULT_DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
-DEFAULT_OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results', 'lstm'))
-
-SEQUENCE_LENGTH = 60
-EPOCHS = 50
-BATCH_SIZE = 16
+DEFAULT_OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results', 'xgboost'))
 
 warnings.filterwarnings('ignore')
 
@@ -33,34 +27,27 @@ warnings.filterwarnings('ignore')
 
 def load_and_prepare_data(filepath, date_col, value_col):
     df = pd.read_csv(filepath, header=1)
-    df = df[df[date_col] != 'Date'].copy()  # Remove second header row
+    df = df[df[date_col] != 'Date'].copy()
     df[date_col] = pd.to_datetime(df[date_col])
     df.set_index(date_col, inplace=True)
-    df = df.asfreq('B')  # Business day frequency
+    df = df.asfreq('B')
     df['Close'] = pd.to_numeric(df[value_col], errors='coerce')
     df['Close'].interpolate(method='linear', inplace=True)
     return df[['Close']].copy()
 
-def create_sequences(data, sequence_length):
-    X, y = [], []
-    for i in range(sequence_length, len(data)):
-        X.append(data[i-sequence_length:i, 0])
-        y.append(data[i, 0])
-    return np.array(X), np.array(y)
+def create_features(df):
+    df['dayofweek'] = df.index.dayofweek
+    df['month'] = df.index.month
+    for lag in range(1, 6):
+        df[f'lag_{lag}'] = df['Close'].shift(lag)
+    df.dropna(inplace=True)
+    return df
 
-def build_model(input_shape):
-    model = Sequential([
-        LSTM(50, return_sequences=False, input_shape=input_shape),
-        Dense(1)
-    ])
-    model.compile(optimizer='adam', loss='mean_squared_error')
-    return model
-
-def plot_forecast(test, forecast, save_path):
+def plot_forecast(test_index, actual, forecast, save_path):
     plt.figure(figsize=(12, 6))
-    plt.plot(test.index, test.values, label='Actual')
-    plt.plot(test.index, forecast, label='Forecast')
-    plt.title('LSTM Forecast vs Actual')
+    plt.plot(test_index, actual, label='Actual')
+    plt.plot(test_index, forecast, label='Forecast')
+    plt.title('XGBoost Forecast vs Actual')
     plt.xlabel('Date')
     plt.ylabel('Closing Price')
     plt.legend()
@@ -80,7 +67,7 @@ def save_forecast(test_index, forecast_values, save_path):
 def save_evaluation(results_dict, save_path):
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     with open(save_path, 'w', encoding='utf-8') as f:
-        f.write("📊 Evaluation for LSTM\n")
+        f.write("\n📊 Evaluation for XGBoost\n")
         f.write(f"{'-'*30}\n")
         for metric, value in results_dict.items():
             if isinstance(value, (int, float)):
@@ -103,38 +90,38 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
 
     print(f"📥 Loading and preparing data for {ticker}...")
     df = load_and_prepare_data(file_path, date_col, value_col)
+    df = create_features(df)
 
-    print("🔄 Scaling data and creating sequences...")
-    scaler = MinMaxScaler()
-    scaled_data = scaler.fit_transform(df)
-    X, y = create_sequences(scaled_data, SEQUENCE_LENGTH)
-
+    print("🔄 Splitting data and scaling...")
     split_index = len(df) - 30
-    X_train, X_test = X[:split_index - SEQUENCE_LENGTH], X[split_index - SEQUENCE_LENGTH:]
-    y_train, y_test = y[:split_index - SEQUENCE_LENGTH], y[split_index - SEQUENCE_LENGTH:]
+    train, test = df.iloc[:split_index], df.iloc[split_index:]
 
-    print("🧠 Building and training model...")
-    model = build_model((X_train.shape[1], 1))
-    model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=0, callbacks=[EarlyStopping(patience=5)])
+    features = ['dayofweek', 'month'] + [f'lag_{i}' for i in range(1, 6)]
+
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(train[features])
+    y_train = train['Close'].values
+    X_test = scaler.transform(test[features])
+    y_test = test['Close'].values
+
+    print("🧠 Training XGBoost model...")
+    model = XGBRegressor(n_estimators=100, learning_rate=0.1, objective='reg:squarederror')
+    model.fit(X_train, y_train)
 
     print("📈 Forecasting...")
-    predictions = model.predict(X_test)
-    forecast = scaler.inverse_transform(predictions)
-    actual = scaler.inverse_transform(y_test.reshape(-1, 1))
-
-    test_index = df.index[-30:]
-    plot_forecast(df[-30:], forecast, save_path=plot_path)
+    forecast = model.predict(X_test)
 
     print("✅ Evaluating forecast...")
-    results = evaluate_forecast(actual.flatten(), forecast.flatten(), model_name=f'LSTM_{ticker}')
+    results = evaluate_forecast(y_test, forecast, model_name=f'XGBoost_{ticker}')
     print_evaluation(results)
     save_evaluation(results, save_path=results_path)
-    save_forecast(test_index, forecast.flatten(), save_path=forecast_path)
+    save_forecast(test.index, forecast, forecast_path)
+    plot_forecast(test.index, y_test, forecast, save_path=plot_path)
 
 # === CLI SUPPORT ===
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Run LSTM Forecasting Engine for a specific ticker.')
+    parser = argparse.ArgumentParser(description='Run XGBoost Forecasting Engine for a specific ticker.')
     parser.add_argument('--ticker', type=str, default='AAPL', help='Ticker symbol, e.g., AAPL')
     parser.add_argument('--date_col', type=str, default='Ticker', help='Column containing dates')
     parser.add_argument('--value_col', type=str, default='AAPL.3', help='Column containing target values')
