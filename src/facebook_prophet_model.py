@@ -50,8 +50,9 @@ def plot_forecast(df, forecast, ticker, save_path):
     print(f"📸 Forecast plot saved to {save_path}")
 
 def save_forecast(forecast_df, save_path):
-    forecast_df.to_csv(save_path, index=False)
+    forecast_df[['ds', 'yhat']].rename(columns={'ds': 'Date', 'yhat': 'Forecast'}).to_csv(save_path, index=False)
     print(f"📄 Forecast values saved to {save_path}")
+
 
 def save_evaluation(results_dict, save_path):
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -105,8 +106,9 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
     save_evaluation(results, save_path=results_path)
 
     print("💾 Saving forecast...")
-    forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].to_csv(forecast_path, index=False)
+    save_forecast(forecast, forecast_path)
     print(f"✅ All Prophet results saved for {ticker}")
+
 
 # === CLI SUPPORT ===
 
