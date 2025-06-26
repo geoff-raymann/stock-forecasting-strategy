@@ -1,133 +1,147 @@
-# 📈 Stock Price Forecasting & Investment Strategy
+# 📈 Stock Forecasting & Strategy Dashboard
 
-This project builds a robust stock price forecasting and risk analysis tool using ARIMA, LSTM, and Prophet models. It supports investment decision-making through Monte Carlo simulations based on Geometric Brownian Motion (GBM) and offers an interactive dashboard for analysis.
-
----
-
-## 🧠 Objectives
-
-- Forecast the next **30–60 trading days** of a selected stock (e.g., AAPL).
-- Evaluate and compare **ARIMA**, **LSTM**, and **Prophet** forecasting models.
-- Run **Monte Carlo simulations** to model price evolution and investment risk.
-- Deploy a dashboard for **interactive forecasting and simulation**.
+A fully-featured forecasting dashboard built with **Streamlit**, showcasing time series predictions using **ARIMA**, **LSTM**, **XGBoost**, **Prophet**, and a dynamic **Ensemble model** powered by inverse RMSE weighting. Designed for executive insights and investment strategy.
 
 ---
 
-## 🛠️ Technologies Used
+## 🚀 Features
 
-- **Language**: Python 3.10+
-- **Libraries**: 
-  - Data Handling: `pandas`, `numpy`
-  - Modeling: `statsmodels`, `tensorflow`, `keras`, `prophet`
-  - Visualization: `matplotlib`, `seaborn`, `plotly`
-  - Evaluation: `sklearn.metrics`
-- **Deployment**: Streamlit or Dash (TBD)
-- **Notebook**: Jupyter for exploratory analysis
+✅ ARIMA, LSTM, XGBoost, Prophet forecasting models  
+✅ Weighted ensemble model (based on inverse RMSE)  
+✅ Model evaluation: MAE, MSE, RMSE  
+✅ Streamlit executive dashboard  
+✅ Export metrics to Excel and HTML  
+✅ Monte Carlo simulation for strategy testing  
+✅ Ready for deployment on Streamlit Cloud  
 
 ---
 
-## 🗂️ Project Structure
+## 📊 Demo
 
-```plaintext
+You can try the deployed app here:  
+👉 [Streamlit Cloud App URL](https://your-streamlit-cloud-url)
+
+---
+
+## 📁 Project Structure
+
+```
 stock-forecasting-strategy/
-├── data/               # Input CSV files (e.g. AAPL.csv)
-├── src/
+│
+├── data/                        # Raw CSVs (per ticker)
+├── results/                    # Model outputs: forecasts and evaluation
+│   └── [model]/[ticker]/...
+│
+├── src/                        # All model scripts (CLI compatible)
 │   ├── arima_model.py
 │   ├── lstm_model.py
+│   ├── xgboost_model.py
 │   ├── prophet_model.py
-│   ├── evaluate_models.py
-│   └── monte_carlo_simulation.py
-├── results/            # Forecasts, metrics, and generated plots
-├── notebooks/          # Jupyter notebooks for prototyping
-├── app/                # Streamlit or Dash app code
-└── README.md
-🚀 Getting Started
-1. Clone the Repository
+│   ├── ensemble_model.py
+│   ├── monte_carlo.py
+│   └── evaluate_models.py
+│
+├── app/
+│   └── dashboard.py            # Streamlit dashboard
+│
+├── requirements.txt
+├── packages.txt
+├── README.md
+└── .streamlit/config.toml      # Optional: Streamlit theme configs
+```
 
-git clone https://github.com/your-username/stock-forecasting-strategy.git
+---
+
+## 💻 Local Setup (Conda Recommended)
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/stock-forecasting-strategy.git
 cd stock-forecasting-strategy
-2. Create Virtual Environment
 
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-3. Install Dependencies
+# 2. Create and activate conda environment
+conda create -n stock-forecasting-env python=3.10
+conda activate stock-forecasting-env
 
+# 3. Install dependencies
 pip install -r requirements.txt
-ℹ️ Note: Ensure Prophet installs correctly. You may need pystan and cmdstanpy.
 
-📊 How to Use
-Train & Forecast
-Run any of the model scripts individually:
+# 4. Run the Streamlit app
+streamlit run app/dashboard.py
+```
 
+---
 
-python src/arima_model.py
-python src/lstm_model.py
-python src/prophet_model.py
-Evaluate Model Accuracy
+## ☁️ Deploying to Streamlit Cloud
 
-python src/evaluate_models.py
-Run Monte Carlo Simulation
+1. Push this repo to GitHub.
+2. Go to [streamlit.io/cloud](https://streamlit.io/cloud) and create a new app from your GitHub repo.
+3. Ensure the following files are in your repo:
+   - `requirements.txt`
+   - `packages.txt` (see below)
+   - `app/dashboard.py`
 
-python src/monte_carlo_simulation.py
-📈 Forecasting Models
-Model	Description	Strengths
-ARIMA	Time-series with trend/seasonality	Strong for linear and stationary data
-LSTM	Recurrent neural network	Captures long-term dependencies, nonlinear
-Prophet	Additive model from Meta/Facebook	Handles holidays, missing data, trends
+### 📦 `packages.txt`
 
-🎲 Monte Carlo Simulation
-Uses Geometric Brownian Motion (GBM) to simulate thousands of possible future price paths. Outputs include:
+```txt
+libgomp1
+build-essential
+python3-dev
+gcc
+g++
+libatlas-base-dev
+```
 
-Price distribution histograms
+---
 
-VaR (Value at Risk)
+## 📈 Running Forecast Scripts (CLI)
 
-Expected returns & volatility
+```bash
+# Run ARIMA model
+python src/arima_model.py --ticker AAPL
 
-📊 Dashboard Features (Coming Soon)
-Ticker symbol input (e.g., AAPL)
+# Run LSTM model
+python src/lstm_model.py --ticker AAPL
 
-Forecast chart with model comparison
+# Run Ensemble model (LSTM + XGBoost)
+python src/ensemble_model.py --ticker AAPL
 
-Monte Carlo simulation interface
+# Run Monte Carlo Simulation
+python src/monte_carlo.py --ticker AAPL
+```
 
-Investment risk-adjustment slider
+---
 
-Export forecasts & visualizations
+## 📤 Export Features
 
-✅ Evaluation Metrics
-Metric	Description
-MAE	Mean Absolute Error
-MSE	Mean Squared Error
-RMSE	Root Mean Squared Error
+From the dashboard, you can:
+- 📥 Export metrics as Excel
+- 📄 Download HTML summary
+- 📊 View statistical tables and charts
 
-All models are benchmarked using a unified evaluate_models.py script.
+---
 
-📌 TODOs
- Model forecasts (ARIMA, LSTM, Prophet)
+## 🤝 Contributing
 
- Centralized evaluation script
+Pull requests are welcome. Please fork the repository and create a new branch for major changes.
 
- Monte Carlo simulation
+---
 
- Streamlit/Dash dashboard
+## 📃 License
 
- Ticker selection and forecasting range UI
+MIT License. Feel free to use, modify, and share.
 
- Dockerize for deployment
+---
 
-📚 References
-Yahoo Finance API
+## 🙌 Acknowledgements
 
-Geometric Brownian Motion - Investopedia
+- Streamlit for rapid app deployment  
+- Facebook Prophet, TensorFlow, and XGBoost teams  
+- ALX Data Science Career Path support  
 
-Facebook Prophet Docs
+---
 
-👨‍💻 Author
-Geoffrey Odiwuor
-ALX Data Science Graduate | Portfolio Project – 2025
-LinkedIn | GitHub
+## 👨‍💻 Author
 
-📄 License
-MIT License – See LICENSE for details.
-
+Geoffrey Odiwuor  
+[LinkedIn](https://linkedin.com/in/your-link) | [GitHub](https://github.com/yourusername)

@@ -1,19 +1,22 @@
-# app/executive_dashboard.py
+# app/dashboard.py
 
 import os
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+import plotly.graph_objects as go
 from glob import glob
+import base64
+from io import BytesIO
 import sys
-import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 from evaluate_models import parse_evaluation_file  # You must have this util implemented
 
 # === CONFIG ===
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 RESULTS_DIR = os.path.join(BASE_DIR, 'results')
+DATA_DIR = os.path.join(BASE_DIR, 'data')
 ALL_MODELS = ['arima', 'lstm', 'prophet', 'xgboost', 'ensemble_reverse_rsme']
 
 # === HELPER FUNCTIONS ===
@@ -40,27 +43,36 @@ def load_evaluation(model, ticker):
     path = os.path.join(RESULTS_DIR, model, ticker, f'{ticker.lower()}_evaluation.txt')
     if not os.path.exists(path):
         return None
-    return parse_evaluation_file(path)  # Should return a dict
+    return parse_evaluation_file(path)
 
-def plot_forecast(ticker, forecasts):
-    fig = plt.figure(figsize=(10, 5))
+def load_actuals(ticker):
+    path = os.path.join(DATA_DIR, f'{ticker}.csv')
+    df = pd.read_csv(path, header=1)
+    df = df[df['Ticker'] != 'Date']
+    df['Ticker'] = pd.to_datetime(df['Ticker'])
+    df = df.set_index('Ticker').asfreq('B').reset_index()
+    df['Close'] = pd.to_numeric(df[f'{ticker}.3'], errors='coerce')
+    df['Close'] = df['Close'].interpolate(method='linear')
+    return df[['Ticker', 'Close']].rename(columns={'Ticker': 'Date'})
+
+def plot_forecast(ticker, forecasts, actuals):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=actuals['Date'], y=actuals['Close'], mode='lines', name='Actual'))
     for model, df in forecasts.items():
-        plt.plot(df['Date'], df['Forecast'], label=model.upper())
-    plt.title(f"Forecast Comparison for {ticker}")
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.legend()
-    st.pyplot(fig)
+        fig.add_trace(go.Scatter(x=df['Date'], y=df['Forecast'], mode='lines', name=model.upper()))
+    fig.update_layout(title=f"Forecast Comparison for {ticker}", xaxis_title='Date', yaxis_title='Price')
+    st.plotly_chart(fig, use_container_width=True)
 
 def display_metrics(ticker, evals):
     st.subheader(f"📊 Evaluation Metrics for {ticker}")
-    cols = st.columns(len(evals))
-    for idx, (model, metrics) in enumerate(evals.items()):
-        with cols[idx]:
-            st.metric("Model", model.upper())
-            st.metric("MAE", f"{metrics['MAE']:.2f}")
-            st.metric("MSE", f"{metrics['MSE']:.2f}")
-            st.metric("RMSE", f"{metrics['RMSE']:.2f}")
+    df = pd.DataFrame([{
+        'Model': model.upper(),
+        'MAE': metrics['MAE'],
+        'MSE': metrics['MSE'],
+        'RMSE': metrics['RMSE']
+    } for model, metrics in evals.items()])
+    st.dataframe(df.style.format({"MAE": "{:.2f}", "MSE": "{:.2f}", "RMSE": "{:.2f}"}))
+    return df
 
 def plot_comparison_chart(ticker, evals):
     chart_data = pd.DataFrame([
@@ -70,6 +82,17 @@ def plot_comparison_chart(ticker, evals):
     fig = px.bar(chart_data, x='Model', y='Value', color='Model', text='Value',
                  title=f"RMSE Comparison - {ticker}", height=400)
     st.plotly_chart(fig)
+
+def generate_download_links(df, filename_prefix):
+    buffer = BytesIO()
+    df.to_excel(buffer, index=False)
+    excel_data = buffer.getvalue()
+    st.download_button("⬇️ Download Excel", data=excel_data, file_name=f"{filename_prefix}.xlsx", mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+    pdf_html = df.to_html(index=False)
+    b64 = base64.b64encode(pdf_html.encode()).decode()
+    href = f'<a href="data:application/octet-stream;base64,{b64}" download="{filename_prefix}.html">⬇️ Download HTML Summary</a>'
+    st.markdown(href, unsafe_allow_html=True)
 
 # === STREAMLIT UI ===
 st.set_page_config(page_title="📈 Executive Forecast Dashboard", layout="wide")
@@ -95,11 +118,13 @@ for ticker in selected_tickers:
         if metrics:
             evaluations[model] = metrics
 
+    actuals = load_actuals(ticker)
     if forecasts:
-        plot_forecast(ticker, forecasts)
+        plot_forecast(ticker, forecasts, actuals)
     if evaluations:
-        display_metrics(ticker, evaluations)
+        summary_df = display_metrics(ticker, evaluations)
         plot_comparison_chart(ticker, evaluations)
+        generate_download_links(summary_df, filename_prefix=f"{ticker}_model_metrics")
 
     st.markdown("---")
 

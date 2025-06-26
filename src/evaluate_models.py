@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
+
 def evaluate_forecast(y_true, y_pred, model_name="Model"):
     """
     Evaluate a forecast using common error metrics.
@@ -83,27 +84,54 @@ def load_all_model_evaluations(results_dir):
                 try:
                     metrics = parse_evaluation_file(file_path)
                     metrics['Ticker'] = file.split('_')[0].upper()
-                    metrics['Source'] = os.path.basename(os.path.dirname(root))  # e.g., lstm, arima, ensemble_reverse_rsme
+                    metrics['Source'] = os.path.basename(os.path.dirname(root))
                     all_metrics.append(metrics)
                 except Exception as e:
                     print(f"❌ Failed to parse {file_path}: {e}")
 
-    return pd.DataFrame(all_metrics)
+    df = pd.DataFrame(all_metrics)
+
+    # Optional: auto-rank best model per ticker based on RMSE
+    if not df.empty:
+        df['Rank'] = df.groupby('Ticker')['RMSE'].rank(method='dense', ascending=True)
+        df.sort_values(by=['Ticker', 'Rank'], inplace=True)
+
+    return df
+
+
+def generate_dashboard_charts(df):
+    """
+    Generate summary charts using matplotlib (or Streamlit-friendly output).
+
+    Parameters:
+        df (pd.DataFrame): DataFrame with evaluation results
+    """
+    import matplotlib.pyplot as plt
+
+    for metric in ['MAE', 'MSE', 'RMSE']:
+        pivot = df.pivot(index='Ticker', columns='Source', values=metric)
+        pivot.plot(kind='bar', figsize=(10, 6), title=f'{metric} Comparison by Model')
+        plt.ylabel(metric)
+        plt.tight_layout()
+        plt.grid(True, linestyle='--', alpha=0.5)
+        plt.show()
 
 
 # === Demo/Test ===
 if __name__ == "__main__":
-    # Sample usage/demo
     y_true = [100, 102, 105, 107, 110]
     y_pred = [101, 103, 104, 106, 111]
     results = evaluate_forecast(y_true, y_pred, model_name="DemoModel")
     print_evaluation(results)
 
-    # Test loading results directory if exists
+    # Load and rank all evaluations
     results_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results'))
     if os.path.isdir(results_path):
-        print("\n📂 Loading all evaluations from:", results_path)
+        print("\n📂 Loading and ranking all evaluations from:", results_path)
         df = load_all_model_evaluations(results_path)
         print(df.head())
+
+        # Plot charts
+        generate_dashboard_charts(df)
     else:
         print("\n⚠️  Results directory not found for evaluation aggregation.")
