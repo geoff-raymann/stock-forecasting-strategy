@@ -1,6 +1,0 @@
-libgomp1
-build-essential
-python3-dev
-gcc
-g++ 
-libatlas-base-dev

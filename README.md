@@ -144,4 +144,4 @@ MIT License. Feel free to use, modify, and share.
 ## 👨‍💻 Author
 
 Geoffrey Odiwuor  
-[LinkedIn](https://linkedin.com/in/your-link) | [GitHub](https://github.com/yourusername)
+[LinkedIn](https://linkedin.com/in/) | [GitHub](https://github.com/geoff-raymann)
