@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.models import Sequential # type: ignore
+from tensorflow.keras.layers import LSTM, Dense # type: ignore
+from tensorflow.keras.callbacks import EarlyStopping # type: ignore
 
 # Add path to evaluation module
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
