@@ -1,11 +1,34 @@
-# docker-compose.yml
-# version: "3.8"
+version: "3.8"
 
 services:
   dashboard:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stock-dashboard
     ports:
       - "8501:8501"
+    restart: unless-stopped
+    volumes:
+      - .:/app  # Optional: mount local files for live updates
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+
+  # Example: Optional background worker for batch forecasting
+  batch_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: forecast-worker
+    command: >
+      bash -c "
+      echo '🔁 Running batch forecasting...'
+      && python src/ensemble_model_reverse_rmse.py --ticker AAPL
+      && python src/generate_dashboard_summary.py
+      && echo '✅ Batch job finished.'
+      && sleep infinity
+      "
+    restart: "no"
     volumes:
       - .:/app
-    restart: unless-stopped
