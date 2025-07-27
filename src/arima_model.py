@@ -26,6 +26,10 @@ def load_and_prepare_data(filepath, date_col, close_col):
     df[date_col] = pd.to_datetime(df[date_col])
     df.set_index(date_col, inplace=True)
     df = df.asfreq('B')  # Set business day frequency
+
+    if close_col not in df.columns:
+        raise ValueError(f"❌ Column '{close_col}' not found in file '{filepath}'.")
+
     df['Close'] = pd.to_numeric(df[close_col], errors='coerce')
     df['Close'].interpolate(method='linear', inplace=True)
     return df[['Close']].copy()
@@ -73,9 +77,11 @@ def save_forecast(test_index, forecast_values, save_path):
 
 # === MAIN SCRIPT ===
 
-def main(ticker=DEFAULT_TICKER, date_col='Ticker', close_col='AAPL.3'):
+def main(ticker=DEFAULT_TICKER, date_col='Ticker', close_col=None):
     warnings.filterwarnings('ignore')
-    
+    if close_col is None or close_col.strip() == "":
+        close_col = f'{ticker}.3'
+
     # Paths
     file_path = os.path.join(DEFAULT_DATA_DIR, f'{ticker}.csv')
     output_dir = os.path.join(DEFAULT_OUTPUT_DIR, ticker)
@@ -116,7 +122,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run ARIMA Forecasting Engine for a specific ticker.')
     parser.add_argument('--ticker', type=str, default='AAPL', help='Ticker symbol, e.g., AAPL')
     parser.add_argument('--date_col', type=str, default='Ticker', help='Column containing dates')
-    parser.add_argument('--close_col', type=str, default='AAPL.3', help='Column containing closing prices')
+    parser.add_argument('--close_col', type=str, default='', help='Column containing closing prices (optional)')
 
     args = parser.parse_args()
     main(ticker=args.ticker, date_col=args.date_col, close_col=args.close_col)

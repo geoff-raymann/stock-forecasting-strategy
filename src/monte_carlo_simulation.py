@@ -10,15 +10,19 @@ from datetime import datetime
 
 # === CONFIG ===
 DEFAULT_TICKER = 'AAPL'
+DEFAULT_DATE_COL = 'Ticker'
 DEFAULT_DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 DEFAULT_OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results', 'monte_carlo'))
 
 def load_data(ticker, date_col, value_col):
     file_path = os.path.join(DEFAULT_DATA_DIR, f'{ticker}.csv')
     df = pd.read_csv(file_path, header=1)
+
+    # Drop 2nd header row if present
     df = df[df[date_col] != 'Date'].copy()
-    df[date_col] = pd.to_datetime(df[date_col])
+    df[date_col] = pd.to_datetime(df[date_col], errors='coerce')
     df[value_col] = pd.to_numeric(df[value_col], errors='coerce')
+
     df = df[[date_col, value_col]].dropna()
     df.columns = ['Date', 'Close']
     df = df.set_index('Date').asfreq('B')
@@ -55,7 +59,12 @@ def save_simulation_data(simulations, ticker, save_path):
     df.to_csv(save_path, index=False)
     print(f"📄 Simulation data saved to {save_path}")
 
-def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
+def main(ticker=DEFAULT_TICKER, date_col=None, value_col=None, simulations=1000, days=30):
+    if not date_col:
+        date_col = DEFAULT_DATE_COL
+    if not value_col:
+        value_col = f'{ticker}.3'
+
     output_dir = os.path.join(DEFAULT_OUTPUT_DIR, ticker)
     os.makedirs(output_dir, exist_ok=True)
 
@@ -63,7 +72,7 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
     df = load_data(ticker, date_col, value_col)
 
     print("🎲 Running Monte Carlo simulation...")
-    simulations = simulate_monte_carlo(df)
+    simulations = simulate_monte_carlo(df, n_simulations=simulations, n_days=days)
 
     print("💾 Saving results...")
     plot_path = os.path.join(output_dir, f'{ticker.lower()}_monte_carlo_plot.png')
@@ -78,7 +87,9 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run Monte Carlo Simulation for a given stock ticker.')
     parser.add_argument('--ticker', type=str, default=DEFAULT_TICKER, help='Ticker symbol (e.g., AAPL)')
-    parser.add_argument('--date_col', type=str, default='Ticker', help='Column name with dates')
-    parser.add_argument('--value_col', type=str, default='AAPL.3', help='Column name with closing prices')
+    parser.add_argument('--date_col', type=str, help='Column name with dates')
+    parser.add_argument('--value_col', type=str, help='Column name with closing prices')
+    parser.add_argument('--simulations', type=int, default=1000, help='Number of simulations')
+    parser.add_argument('--days', type=int, default=30, help='Number of days to simulate')
     args = parser.parse_args()
-    main(ticker=args.ticker, date_col=args.date_col, value_col=args.value_col)
+    main(ticker=args.ticker, date_col=args.date_col, value_col=args.value_col, simulations=args.simulations, days=args.days)

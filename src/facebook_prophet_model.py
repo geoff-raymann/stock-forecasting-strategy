@@ -1,4 +1,4 @@
-# src/prophet_model.py
+# src/facebook_prophet_model.py
 
 import os
 import sys
@@ -28,6 +28,10 @@ def load_and_prepare_data(filepath, date_col, value_col):
     df = pd.read_csv(filepath, header=1)
     df = df[df[date_col] != 'Date'].copy()
     df[date_col] = pd.to_datetime(df[date_col])
+
+    if value_col not in df.columns:
+        raise ValueError(f"❌ Column '{value_col}' not found in file '{filepath}'.")
+
     df[value_col] = pd.to_numeric(df[value_col], errors='coerce')
     df = df[[date_col, value_col]].dropna()
     df.columns = ['ds', 'y']
@@ -53,7 +57,6 @@ def save_forecast(forecast_df, save_path):
     forecast_df[['ds', 'yhat']].rename(columns={'ds': 'Date', 'yhat': 'Forecast'}).to_csv(save_path, index=False)
     print(f"📄 Forecast values saved to {save_path}")
 
-
 def save_evaluation(results_dict, save_path):
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     with open(save_path, 'w', encoding='utf-8') as f:
@@ -69,7 +72,10 @@ def save_evaluation(results_dict, save_path):
 
 # === MAIN SCRIPT ===
 
-def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
+def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col=None):
+    if not value_col or value_col.strip() == "":
+        value_col = f'{ticker}.3'
+
     file_path = os.path.join(DEFAULT_DATA_DIR, f'{ticker}.csv')
     output_dir = os.path.join(DEFAULT_OUTPUT_DIR, ticker)
     os.makedirs(output_dir, exist_ok=True)
@@ -109,13 +115,12 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
     save_forecast(forecast, forecast_path)
     print(f"✅ All Prophet results saved for {ticker}")
 
-
 # === CLI SUPPORT ===
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run Prophet Forecasting Engine for a specific ticker.')
     parser.add_argument('--ticker', type=str, default='AAPL', help='Ticker symbol, e.g., AAPL')
     parser.add_argument('--date_col', type=str, default='Ticker', help='Column containing dates')
-    parser.add_argument('--value_col', type=str, default='AAPL.3', help='Column containing target values')
+    parser.add_argument('--value_col', type=str, default='', help='Column containing target values (optional)')
     args = parser.parse_args()
     main(ticker=args.ticker, date_col=args.date_col, value_col=args.value_col)

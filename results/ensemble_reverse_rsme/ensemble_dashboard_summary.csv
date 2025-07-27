@@ -1,2 +1,5 @@
 Ticker,Model,MAE,MSE,RMSE,Timestamp
-AAPL,Ensemble,,,,2025-07-15 12:57:30
+AAPL,Ensemble,,,,2025-07-23 23:07:03
+MSFT,Ensemble,,,,2025-07-23 23:09:02
+PFE,Ensemble,,,,2025-07-23 23:11:38
+JNJ,Ensemble,,,,2025-07-23 23:13:22

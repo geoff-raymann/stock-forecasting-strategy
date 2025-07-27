@@ -31,6 +31,10 @@ def load_and_prepare_data(filepath, date_col, value_col):
     df[date_col] = pd.to_datetime(df[date_col])
     df.set_index(date_col, inplace=True)
     df = df.asfreq('B')
+
+    if value_col not in df.columns:
+        raise ValueError(f"❌ Column '{value_col}' not found in '{filepath}'.")
+
     df['Close'] = pd.to_numeric(df[value_col], errors='coerce')
     df['Close'].interpolate(method='linear', inplace=True)
     return df[['Close']].copy()
@@ -79,7 +83,10 @@ def save_evaluation(results_dict, save_path):
 
 # === MAIN SCRIPT ===
 
-def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col='AAPL.3'):
+def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col=None):
+    if not value_col or value_col.strip() == "":
+        value_col = f'{ticker}.3'
+
     file_path = os.path.join(DEFAULT_DATA_DIR, f'{ticker}.csv')
     output_dir = os.path.join(DEFAULT_OUTPUT_DIR, ticker)
     os.makedirs(output_dir, exist_ok=True)
@@ -124,6 +131,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run XGBoost Forecasting Engine for a specific ticker.')
     parser.add_argument('--ticker', type=str, default='AAPL', help='Ticker symbol, e.g., AAPL')
     parser.add_argument('--date_col', type=str, default='Ticker', help='Column containing dates')
-    parser.add_argument('--value_col', type=str, default='AAPL.3', help='Column containing target values')
+    parser.add_argument('--value_col', type=str, default='', help='Column containing target values (optional)')
     args = parser.parse_args()
     main(ticker=args.ticker, date_col=args.date_col, value_col=args.value_col)
