@@ -9,9 +9,10 @@ A fully-featured forecasting dashboard built with **Streamlit**, showcasing time
 ✅ ARIMA, LSTM, XGBoost, Prophet forecasting models  
 ✅ Weighted ensemble model (based on inverse RMSE)  
 ✅ Model evaluation: MAE, MSE, RMSE  
-✅ Streamlit executive dashboard  
+✅ Interactive Streamlit executive dashboard (Plotly charts: hover, zoom, pan)  
 ✅ Export metrics to Excel and HTML  
 ✅ Monte Carlo simulation for strategy testing  
+✅ Executive KPIs: Best model, RMSE, latest forecast, latest actual, MC stats  
 ✅ Ready for deployment on Streamlit Cloud  
 
 ---
@@ -29,25 +30,25 @@ You can try the deployed app here:
 stock-forecasting-strategy/
 │
 ├── data/                        # Raw CSVs (per ticker)
-├── results/                    # Model outputs: forecasts and evaluation
+├── results/                     # Model outputs: forecasts and evaluation
 │   └── [model]/[ticker]/...
 │
-├── src/                        # All model scripts (CLI compatible)
+├── src/                         # All model scripts (CLI compatible)
 │   ├── arima_model.py
 │   ├── lstm_model.py
 │   ├── xgboost_model.py
-│   ├── prophet_model.py
-│   ├── ensemble_model.py
-│   ├── monte_carlo.py
+│   ├── facebook_prophet_model.py
+│   ├── ensemble_model_reverse_rmse.py
+│   ├── monte_carlo_simulation.py
 │   └── evaluate_models.py
 │
 ├── app/
-│   └── dashboard.py            # Streamlit dashboard
+│   └── dashboard.py             # Streamlit dashboard
 │
 ├── requirements.txt
 ├── packages.txt
 ├── README.md
-└── .streamlit/config.toml      # Optional: Streamlit theme configs
+└── .streamlit/config.toml       # Optional: Streamlit theme configs
 ```
 
 ---
@@ -103,11 +104,17 @@ python src/arima_model.py --ticker AAPL
 # Run LSTM model
 python src/lstm_model.py --ticker AAPL
 
+# Run XGBoost model
+python src/xgboost_model.py --ticker AAPL
+
+# Run Prophet model
+python src/facebook_prophet_model.py --ticker AAPL
+
 # Run Ensemble model (LSTM + XGBoost)
-python src/ensemble_model.py --ticker AAPL
+python src/ensemble_model_reverse_rmse.py --ticker AAPL
 
 # Run Monte Carlo Simulation
-python src/monte_carlo.py --ticker AAPL
+python src/monte_carlo_simulation.py --ticker AAPL
 ```
 
 ---
@@ -115,9 +122,9 @@ python src/monte_carlo.py --ticker AAPL
 ## 📤 Export Features
 
 From the dashboard, you can:
-- 📥 Export metrics as Excel
+- 📥 Export metrics as Excel or CSV
 - 📄 Download HTML summary
-- 📊 View statistical tables and charts
+- 📊 View interactive statistical tables and charts
 
 ---
 
@@ -143,5 +150,4 @@ MIT License. Feel free to use, modify, and share.
 
 ## 👨‍💻 Author
 
-Geoffrey Odiwuor  
-[LinkedIn](https://linkedin.com/in/) | [GitHub](https://github.com/geoff-raymann)
+Geoffrey Odiwuor
