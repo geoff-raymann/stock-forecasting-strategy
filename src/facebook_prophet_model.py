@@ -53,8 +53,15 @@ def plot_forecast(df, forecast, ticker, save_path):
     plt.close()
     print(f"📸 Forecast plot saved to {save_path}")
 
-def save_forecast(forecast_df, save_path):
-    forecast_df[['ds', 'yhat']].rename(columns={'ds': 'Date', 'yhat': 'Forecast'}).to_csv(save_path, index=False)
+def save_forecast(forecast_df, test_df, save_path):
+    # Only keep forecast rows that match the test period
+    forecast_subset = forecast_df.set_index('ds').loc[test_df['ds']].reset_index()
+    out_df = pd.DataFrame({
+        'Date': forecast_subset['ds'],
+        'Forecast': forecast_subset['yhat'],
+        'Actual': test_df['y'].values
+    })
+    out_df.to_csv(save_path, index=False)
     print(f"📄 Forecast values saved to {save_path}")
 
 def save_evaluation(results_dict, save_path):
@@ -112,7 +119,7 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col=None):
     save_evaluation(results, save_path=results_path)
 
     print("💾 Saving forecast...")
-    save_forecast(forecast, forecast_path)
+    save_forecast(forecast, test, forecast_path)
     print(f"✅ All Prophet results saved for {ticker}")
 
 # === CLI SUPPORT ===

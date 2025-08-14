@@ -60,11 +60,13 @@ def plot_forecast(test_index, actual, forecast, save_path):
     plt.close()
     print(f"📸 Forecast plot saved to {save_path}")
 
-def save_forecast(test_index, forecast_values, save_path):
+def save_forecast(test_index, forecast_values, save_path, actual_values=None):
     forecast_df = pd.DataFrame({
         'Date': test_index,
         'Forecast': forecast_values
     })
+    if actual_values is not None:
+        forecast_df['Actual'] = actual_values
     forecast_df.to_csv(save_path, index=False)
     print(f"📄 Forecast values saved to {save_path}")
 
@@ -122,7 +124,7 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', value_col=None):
     results = evaluate_forecast(y_test, forecast, model_name=f'XGBoost_{ticker}')
     print_evaluation(results)
     save_evaluation(results, save_path=results_path)
-    save_forecast(test.index, forecast, forecast_path)
+    save_forecast(test.index, forecast, forecast_path, actual_values=y_test)
     plot_forecast(test.index, y_test, forecast, save_path=plot_path)
 
 # === CLI SUPPORT ===

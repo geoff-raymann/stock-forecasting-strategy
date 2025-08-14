@@ -1,8 +1,8 @@
 📊 Evaluation for ARIMA
 ------------------------------
 MODEL : ARIMA_JNJ
-MAE   : 3.3224
-MSE   : 21.3768
-RMSE  : 4.6235
+MAE   : 8.5784
+MSE   : 111.1038
+RMSE  : 10.5406
 
-Saved on 2025-07-23 23:11:49
+Saved on 2025-08-14 14:30:01

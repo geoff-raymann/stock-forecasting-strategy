@@ -5,6 +5,7 @@ import argparse
 import pandas as pd
 from datetime import datetime
 from evaluate_models import evaluate_forecast, print_evaluation
+import matplotlib.pyplot as plt
 
 # === CONFIG ===
 DEFAULT_TICKER = 'AAPL'
@@ -63,10 +64,19 @@ def load_actuals(ticker):
     return df['Close'].iloc[-30:].values
 
 def save_forecast(dates, forecast, ticker):
+    # Load actuals for the forecast period
+    actual = load_actuals(ticker)
+    # Ensure lengths match (if not, pad with NaN or slice)
+    if len(actual) != len(forecast):
+        # Try to align by slicing to the shortest length
+        min_len = min(len(actual), len(forecast))
+        actual = actual[-min_len:]
+        forecast = forecast[-min_len:]
+        dates = dates[-min_len:]
     ticker_dir = os.path.join(ENSEMBLE_DIR, ticker)
     os.makedirs(ticker_dir, exist_ok=True)
     path = os.path.join(ticker_dir, f'{ticker.lower()}_forecast.csv')
-    pd.DataFrame({'Date': dates, 'Forecast': forecast}).to_csv(path, index=False)
+    pd.DataFrame({'Date': dates, 'Forecast': forecast, 'Actual': actual}).to_csv(path, index=False)
     print(f"📄 Forecast values saved to {path}")
 
 def save_evaluation(results, ticker):
@@ -105,6 +115,22 @@ def save_evaluation(results, ticker):
     df.to_csv(DASHBOARD_SUMMARY_PATH, index=False)
     print(f"📊 Dashboard summary updated at {DASHBOARD_SUMMARY_PATH}")
 
+def save_forecast_plot(dates, actual, forecast, ticker):
+    plt.figure(figsize=(10, 4))
+    plt.plot(dates, actual, label='Actual', marker='o')
+    plt.plot(dates, forecast, label='Ensemble Forecast', marker='x')
+    plt.title(f"{ticker} - Actual vs Ensemble Forecast")
+    plt.xlabel("Date")
+    plt.ylabel("Price")
+    plt.legend()
+    plt.tight_layout()
+    ticker_dir = os.path.join(ENSEMBLE_DIR, ticker)
+    os.makedirs(ticker_dir, exist_ok=True)
+    path = os.path.join(ticker_dir, f"{ticker.lower()}_forecast_plot.png")
+    plt.savefig(path)
+    plt.close()
+    print(f"📊 Forecast plot saved to {path}")
+
 # === MAIN EXECUTION ===
 def main(ticker=DEFAULT_TICKER):
     forecast, dates = ensemble_forecast(ticker)
@@ -112,6 +138,7 @@ def main(ticker=DEFAULT_TICKER):
     results = evaluate_forecast(actual, forecast, model_name=f'Ensemble_{ticker}')
     print_evaluation(results)
     save_forecast(dates, forecast, ticker)
+    save_forecast_plot(dates, actual, forecast, ticker)  # <-- Add this line
     save_evaluation(results, ticker)
 
 # === CLI ===

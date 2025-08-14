@@ -2,8 +2,8 @@
 📊 Evaluation for Ensemble
 ------------------------------
 MODEL : Ensemble_MSFT
-MAE   : 13.3165
-MSE   : 196.4981
-RMSE  : 14.0178
+MAE   : 9.0014
+MSE   : 107.7113
+RMSE  : 10.3784
 
-Saved on 2025-07-23 23:09:02
+Saved on 2025-08-14 14:28:09

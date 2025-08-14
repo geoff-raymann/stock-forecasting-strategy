@@ -2,8 +2,8 @@
 📊 Evaluation for XGBoost
 ------------------------------
 MODEL : XGBoost_AAPL
-MAE   : 1.5748
-MSE   : 4.6253
-RMSE  : 2.1507
+MAE   : 2.8570
+MSE   : 15.5264
+RMSE  : 3.9404
 
-Saved on 2025-07-23 23:07:01
+Saved on 2025-08-14 14:26:06

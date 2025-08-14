@@ -1,8 +1,8 @@
 📊 Evaluation for ARIMA
 ------------------------------
 MODEL : ARIMA_MSFT
-MAE   : 20.9399
-MSE   : 567.3874
-RMSE  : 23.8199
+MAE   : 20.5396
+MSE   : 543.6447
+RMSE  : 23.3162
 
-Saved on 2025-07-23 23:07:12
+Saved on 2025-08-14 14:26:15

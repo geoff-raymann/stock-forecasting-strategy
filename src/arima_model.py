@@ -67,11 +67,13 @@ def save_evaluation(results_dict, save_path):
         f.write(f"\nSaved on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
     print(f"📄 Evaluation results saved to {save_path}")
 
-def save_forecast(test_index, forecast_values, save_path):
+def save_forecast(test_index, forecast_values, save_path, actual_values=None):
     forecast_df = pd.DataFrame({
         'Date': test_index,
         'Forecast': forecast_values
     })
+    if actual_values is not None:
+        forecast_df['Actual'] = actual_values
     forecast_df.to_csv(save_path, index=False)
     print(f"📄 Forecast values saved to {save_path}")
 
@@ -113,7 +115,7 @@ def main(ticker=DEFAULT_TICKER, date_col='Ticker', close_col=None):
     save_evaluation(results, save_path=results_path)
 
     print("💾 Saving forecast values...")
-    save_forecast(test.index, forecast, save_path=forecast_path)
+    save_forecast(test.index, forecast, save_path=forecast_path, actual_values=test.values)
 
 # === CLI SUPPORT ===
 

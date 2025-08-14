@@ -59,6 +59,26 @@ def save_simulation_data(simulations, ticker, save_path):
     df.to_csv(save_path, index=False)
     print(f"📄 Simulation data saved to {save_path}")
 
+def save_summary_stats(simulations, ticker, summary_path):
+    final_prices = simulations[-1, :]
+    mean = np.mean(final_prices)
+    p5 = np.percentile(final_prices, 5)
+    p95 = np.percentile(final_prices, 95)
+    summary_df = pd.DataFrame([{
+        'Ticker': ticker,
+        'Mean': mean,
+        '5th Percentile': p5,
+        '95th Percentile': p95
+    }])
+    # Append or create the summary CSV
+    if os.path.exists(summary_path):
+        existing = pd.read_csv(summary_path)
+        # Remove old entry for this ticker if present
+        existing = existing[existing['Ticker'] != ticker]
+        summary_df = pd.concat([existing, summary_df], ignore_index=True)
+    summary_df.to_csv(summary_path, index=False)
+    print(f"📄 Monte Carlo summary saved to {summary_path}")
+
 def main(ticker=DEFAULT_TICKER, date_col=None, value_col=None, simulations=1000, days=30):
     if not date_col:
         date_col = DEFAULT_DATE_COL
@@ -77,9 +97,11 @@ def main(ticker=DEFAULT_TICKER, date_col=None, value_col=None, simulations=1000,
     print("💾 Saving results...")
     plot_path = os.path.join(output_dir, f'{ticker.lower()}_monte_carlo_plot.png')
     csv_path = os.path.join(output_dir, f'{ticker.lower()}_simulations.csv')
+    summary_path = os.path.join(DEFAULT_OUTPUT_DIR, 'monte_carlo_summary.csv')
 
     plot_simulation(simulations, ticker, plot_path)
     save_simulation_data(simulations, ticker, csv_path)
+    save_summary_stats(simulations, ticker, summary_path)
 
     print(f"✅ Monte Carlo simulation completed for {ticker}")
 
