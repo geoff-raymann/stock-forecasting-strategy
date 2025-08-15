@@ -1,8 +1,8 @@
 📊 Evaluation for Prophet
 ------------------------------
 MODEL : Prophet_JNJ
-MAE   : 7.9363
-MSE   : 87.5829
-RMSE  : 9.3586
+MAE   : 8.3649
+MSE   : 94.8543
+RMSE  : 9.7393
 
-Saved on 2025-08-14 14:31:28
+Saved on 2025-08-15 13:39:31

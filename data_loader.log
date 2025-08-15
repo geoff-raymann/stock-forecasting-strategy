@@ -42,3 +42,53 @@
 2025-08-14 14:24:14,252 INFO: Fetching JNJ data from Yahoo Finance...
 2025-08-14 14:24:15,245 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
 2025-08-14 14:31:37,808 INFO: Notification email sent.
+2025-08-15 06:00:03,163 INFO: Fetching AAPL data from Yahoo Finance...
+2025-08-15 06:00:03,163 INFO: Fetching AAPL data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 06:00:04,865 INFO: Saved AAPL to /home/geoff/Projects/stock-forecasting-strategy/data/AAPL.csv
+2025-08-15 06:00:04,865 INFO: Saved AAPL to /home/geoff/Projects/stock-forecasting-strategy/data/AAPL.csv
+2025-08-15 06:00:04,865 INFO: Fetching MSFT data from Yahoo Finance...
+2025-08-15 06:00:04,865 INFO: Fetching MSFT data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 06:00:05,956 INFO: Saved MSFT to /home/geoff/Projects/stock-forecasting-strategy/data/MSFT.csv
+2025-08-15 06:00:05,956 INFO: Saved MSFT to /home/geoff/Projects/stock-forecasting-strategy/data/MSFT.csv
+2025-08-15 06:00:05,956 INFO: Fetching PFE data from Yahoo Finance...
+2025-08-15 06:00:05,956 INFO: Fetching PFE data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 06:00:06,868 INFO: Saved PFE to /home/geoff/Projects/stock-forecasting-strategy/data/PFE.csv
+2025-08-15 06:00:06,868 INFO: Saved PFE to /home/geoff/Projects/stock-forecasting-strategy/data/PFE.csv
+2025-08-15 06:00:06,868 INFO: Fetching JNJ data from Yahoo Finance...
+2025-08-15 06:00:06,868 INFO: Fetching JNJ data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 06:00:07,858 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
+2025-08-15 06:00:07,858 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
+python: can't open file '/home/geoff/src/batch_runner.py': [Errno 2] No such file or directory
+2025-08-15 06:00:07,889 ERROR: Script failed!
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/data_loader.py", line 70, in <module>
+    subprocess.run(["python", "src/batch_runner.py"], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python', 'src/batch_runner.py']' returned non-zero exit status 2.
+2025-08-15 06:00:07,889 ERROR: Script failed!
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/data_loader.py", line 70, in <module>
+    subprocess.run(["python", "src/batch_runner.py"], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python', 'src/batch_runner.py']' returned non-zero exit status 2.
+2025-08-15 06:00:11,731 INFO: Notification email sent.
+2025-08-15 06:00:11,731 INFO: Notification email sent.
+2025-08-15 13:33:09,148 INFO: Fetching AAPL data from Yahoo Finance...
+2025-08-15 13:33:10,985 INFO: Saved AAPL to /home/geoff/Projects/stock-forecasting-strategy/data/AAPL.csv
+2025-08-15 13:33:10,985 INFO: Fetching MSFT data from Yahoo Finance...
+2025-08-15 13:33:12,130 INFO: Saved MSFT to /home/geoff/Projects/stock-forecasting-strategy/data/MSFT.csv
+2025-08-15 13:33:12,131 INFO: Fetching PFE data from Yahoo Finance...
+2025-08-15 13:33:13,231 INFO: Saved PFE to /home/geoff/Projects/stock-forecasting-strategy/data/PFE.csv
+2025-08-15 13:33:13,231 INFO: Fetching JNJ data from Yahoo Finance...
+2025-08-15 13:33:15,911 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
+2025-08-15 13:39:42,468 INFO: Notification email sent.

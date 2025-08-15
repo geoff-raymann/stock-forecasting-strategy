@@ -1,8 +1,8 @@
 📊 Evaluation for Prophet
 ------------------------------
 MODEL : Prophet_AAPL
-MAE   : 27.1111
-MSE   : 773.5909
-RMSE  : 27.8135
+MAE   : 26.9312
+MSE   : 770.3328
+RMSE  : 27.7549
 
-Saved on 2025-08-14 14:26:04
+Saved on 2025-08-15 13:34:50

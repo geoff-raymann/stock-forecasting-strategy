@@ -2,8 +2,8 @@
 📊 Evaluation for Ensemble
 ------------------------------
 MODEL : Ensemble_JNJ
-MAE   : 1.2763
-MSE   : 2.8891
-RMSE  : 1.6997
+MAE   : 1.2829
+MSE   : 2.9996
+RMSE  : 1.7319
 
-Saved on 2025-08-14 14:31:32
+Saved on 2025-08-15 13:39:36

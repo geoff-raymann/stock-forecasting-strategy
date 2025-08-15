@@ -2,8 +2,8 @@
 📊 Evaluation for XGBoost
 ------------------------------
 MODEL : XGBoost_JNJ
-MAE   : 1.3847
-MSE   : 3.2132
-RMSE  : 1.7925
+MAE   : 1.3583
+MSE   : 3.3708
+RMSE  : 1.8360
 
-Saved on 2025-08-14 14:31:29
+Saved on 2025-08-15 13:39:33
