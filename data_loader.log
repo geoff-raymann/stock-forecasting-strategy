@@ -92,3 +92,284 @@ subprocess.CalledProcessError: Command '['python', 'src/batch_runner.py']' retur
 2025-08-15 13:33:13,231 INFO: Fetching JNJ data from Yahoo Finance...
 2025-08-15 13:33:15,911 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
 2025-08-15 13:39:42,468 INFO: Notification email sent.
+2025-08-15 14:08:02,550 INFO: Fetching AAPL data from Yahoo Finance...
+2025-08-15 14:08:02,550 INFO: Fetching AAPL data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 14:08:04,234 INFO: Saved AAPL to /home/geoff/Projects/stock-forecasting-strategy/data/AAPL.csv
+2025-08-15 14:08:04,234 INFO: Saved AAPL to /home/geoff/Projects/stock-forecasting-strategy/data/AAPL.csv
+2025-08-15 14:08:04,234 INFO: Fetching MSFT data from Yahoo Finance...
+2025-08-15 14:08:04,234 INFO: Fetching MSFT data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 14:08:05,176 INFO: Saved MSFT to /home/geoff/Projects/stock-forecasting-strategy/data/MSFT.csv
+2025-08-15 14:08:05,176 INFO: Saved MSFT to /home/geoff/Projects/stock-forecasting-strategy/data/MSFT.csv
+2025-08-15 14:08:05,176 INFO: Fetching PFE data from Yahoo Finance...
+2025-08-15 14:08:05,176 INFO: Fetching PFE data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 14:08:06,229 INFO: Saved PFE to /home/geoff/Projects/stock-forecasting-strategy/data/PFE.csv
+2025-08-15 14:08:06,229 INFO: Saved PFE to /home/geoff/Projects/stock-forecasting-strategy/data/PFE.csv
+2025-08-15 14:08:06,229 INFO: Fetching JNJ data from Yahoo Finance...
+2025-08-15 14:08:06,229 INFO: Fetching JNJ data from Yahoo Finance...
+[*********************100%***********************]  1 of 1 completed
+2025-08-15 14:08:07,348 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
+2025-08-15 14:08:07,348 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
+
+🔍 Validating ticker files in '/home/geoff/Projects/stock-forecasting-strategy/data'
+
+✅ AAPL: File OK.
+✅ MSFT: File OK.
+✅ PFE: File OK.
+✅ JNJ: File OK.
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py", line 8, in <module>
+    from statsmodels.tsa.arima.model import ARIMA
+ModuleNotFoundError: No module named 'statsmodels'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py", line 12, in <module>
+    from sklearn.preprocessing import MinMaxScaler
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py", line 11, in <module>
+    from prophet import Prophet
+ModuleNotFoundError: No module named 'prophet'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py", line 11, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py", line 7, in <module>
+    from evaluate_models import evaluate_forecast, print_evaluation
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/evaluate_models.py", line 4, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+/home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py:29: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
+The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
+
+For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.
+
+
+  df['Close'].interpolate(method='linear', inplace=True)
+📥 Loading data for AAPL...
+🎲 Running Monte Carlo simulation...
+💾 Saving results...
+📸 Simulation plot saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/AAPL/aapl_monte_carlo_plot.png
+📄 Simulation data saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/AAPL/aapl_simulations.csv
+📄 Monte Carlo summary saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/monte_carlo_summary.csv
+✅ Monte Carlo simulation completed for AAPL
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py", line 8, in <module>
+    from statsmodels.tsa.arima.model import ARIMA
+ModuleNotFoundError: No module named 'statsmodels'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py", line 12, in <module>
+    from sklearn.preprocessing import MinMaxScaler
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py", line 11, in <module>
+    from prophet import Prophet
+ModuleNotFoundError: No module named 'prophet'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py", line 11, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py", line 7, in <module>
+    from evaluate_models import evaluate_forecast, print_evaluation
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/evaluate_models.py", line 4, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+/home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py:29: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
+The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
+
+For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.
+
+
+  df['Close'].interpolate(method='linear', inplace=True)
+📥 Loading data for MSFT...
+🎲 Running Monte Carlo simulation...
+💾 Saving results...
+📸 Simulation plot saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/MSFT/msft_monte_carlo_plot.png
+📄 Simulation data saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/MSFT/msft_simulations.csv
+📄 Monte Carlo summary saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/monte_carlo_summary.csv
+✅ Monte Carlo simulation completed for MSFT
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py", line 8, in <module>
+    from statsmodels.tsa.arima.model import ARIMA
+ModuleNotFoundError: No module named 'statsmodels'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py", line 12, in <module>
+    from sklearn.preprocessing import MinMaxScaler
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py", line 11, in <module>
+    from prophet import Prophet
+ModuleNotFoundError: No module named 'prophet'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py", line 11, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py", line 7, in <module>
+    from evaluate_models import evaluate_forecast, print_evaluation
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/evaluate_models.py", line 4, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+/home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py:29: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
+The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
+
+For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.
+
+
+  df['Close'].interpolate(method='linear', inplace=True)
+📥 Loading data for PFE...
+🎲 Running Monte Carlo simulation...
+💾 Saving results...
+📸 Simulation plot saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/PFE/pfe_monte_carlo_plot.png
+📄 Simulation data saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/PFE/pfe_simulations.csv
+📄 Monte Carlo summary saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/monte_carlo_summary.csv
+✅ Monte Carlo simulation completed for PFE
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py", line 8, in <module>
+    from statsmodels.tsa.arima.model import ARIMA
+ModuleNotFoundError: No module named 'statsmodels'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py", line 12, in <module>
+    from sklearn.preprocessing import MinMaxScaler
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py", line 11, in <module>
+    from prophet import Prophet
+ModuleNotFoundError: No module named 'prophet'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py", line 11, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+Traceback (most recent call last):
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py", line 7, in <module>
+    from evaluate_models import evaluate_forecast, print_evaluation
+  File "/home/geoff/Projects/stock-forecasting-strategy/src/evaluate_models.py", line 4, in <module>
+    from sklearn.metrics import mean_absolute_error, mean_squared_error
+ModuleNotFoundError: No module named 'sklearn'
+/home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py:29: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
+The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
+
+For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.
+
+
+  df['Close'].interpolate(method='linear', inplace=True)
+📥 Loading data for JNJ...
+🎲 Running Monte Carlo simulation...
+💾 Saving results...
+📸 Simulation plot saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/JNJ/jnj_monte_carlo_plot.png
+📄 Simulation data saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/JNJ/jnj_simulations.csv
+📄 Monte Carlo summary saved to /home/geoff/Projects/stock-forecasting-strategy/results/monte_carlo/monte_carlo_summary.csv
+✅ Monte Carlo simulation completed for JNJ
+📊 All-model summary saved to /home/geoff/Projects/stock-forecasting-strategy/results/all_models_dashboard_summary.csv
+
+🔍 Validating data before forecast run...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/../tools/validate_data.py
+✅ Finished: python /home/geoff/Projects/stock-forecasting-strategy/src/../tools/validate_data.py
+
+📈 Running models for AAPL...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker AAPL
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker AAPL
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker AAPL
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker AAPL
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker AAPL
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker AAPL
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker AAPL
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker AAPL
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker AAPL
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker AAPL
+
+🎲 Running Monte Carlo scenario simulation...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker AAPL
+✅ Finished: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker AAPL
+
+📈 Running models for MSFT...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker MSFT
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker MSFT
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker MSFT
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker MSFT
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker MSFT
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker MSFT
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker MSFT
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker MSFT
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker MSFT
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker MSFT
+
+🎲 Running Monte Carlo scenario simulation...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker MSFT
+✅ Finished: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker MSFT
+
+📈 Running models for PFE...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker PFE
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker PFE
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker PFE
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker PFE
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker PFE
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker PFE
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker PFE
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker PFE
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker PFE
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker PFE
+
+🎲 Running Monte Carlo scenario simulation...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker PFE
+✅ Finished: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker PFE
+
+📈 Running models for JNJ...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker JNJ
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/arima_model.py --ticker JNJ
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker JNJ
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/lstm_model.py --ticker JNJ
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker JNJ
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/facebook_prophet_model.py --ticker JNJ
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker JNJ
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/xgboost_model.py --ticker JNJ
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker JNJ
+❌ Command failed: python /home/geoff/Projects/stock-forecasting-strategy/src/ensemble_model_reverse_rmse.py --ticker JNJ
+
+🎲 Running Monte Carlo scenario simulation...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker JNJ
+✅ Finished: python /home/geoff/Projects/stock-forecasting-strategy/src/monte_carlo_simulation.py --ticker JNJ
+
+🗂️ Generating dashboard summary CSV...
+
+🚀 Running: python /home/geoff/Projects/stock-forecasting-strategy/src/generate_dashboard_summary.py
+✅ Finished: python /home/geoff/Projects/stock-forecasting-strategy/src/generate_dashboard_summary.py
+2025-08-15 14:08:39,290 INFO: Notification email sent.
+2025-08-15 14:08:39,290 INFO: Notification email sent.
+2025-10-05 21:28:54,042 INFO: Fetching AAPL data from Yahoo Finance...
+2025-10-05 21:28:55,930 INFO: Saved AAPL to /home/geoff/Projects/stock-forecasting-strategy/data/AAPL.csv
+2025-10-05 21:28:55,931 INFO: Fetching MSFT data from Yahoo Finance...
+2025-10-05 21:28:56,930 INFO: Saved MSFT to /home/geoff/Projects/stock-forecasting-strategy/data/MSFT.csv
+2025-10-05 21:28:56,931 INFO: Fetching PFE data from Yahoo Finance...
+2025-10-05 21:28:58,050 INFO: Saved PFE to /home/geoff/Projects/stock-forecasting-strategy/data/PFE.csv
+2025-10-05 21:28:58,051 INFO: Fetching JNJ data from Yahoo Finance...
+2025-10-05 21:28:59,146 INFO: Saved JNJ to /home/geoff/Projects/stock-forecasting-strategy/data/JNJ.csv
+2025-10-05 21:35:39,865 INFO: Notification email sent.

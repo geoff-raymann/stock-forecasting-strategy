@@ -67,7 +67,7 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-        subprocess.run(["python", "src/batch_runner.py"], check=True)
+        subprocess.run(["python", "/home/geoff/Projects/stock-forecasting-strategy/src/batch_runner.py"], check=True)
         send_notification(
             "Stock Data Loader Success",
             "Data loading and batch processing completed successfully."

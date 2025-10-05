@@ -1,8 +1,8 @@
 📊 Evaluation for ARIMA
 ------------------------------
 MODEL : ARIMA_AAPL
-MAE   : 5.2502
-MSE   : 57.8387
-RMSE  : 7.6052
+MAE   : 13.1026
+MSE   : 279.8728
+RMSE  : 16.7294
 
-Saved on 2025-08-15 13:33:22
+Saved on 2025-10-05 21:29:05

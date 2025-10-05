@@ -2,8 +2,8 @@
 📊 Evaluation for Ensemble
 ------------------------------
 MODEL : Ensemble_PFE
-MAE   : 0.3082
-MSE   : 0.1842
-RMSE  : 0.4292
+MAE   : 0.3058
+MSE   : 0.2325
+RMSE  : 0.4822
 
-Saved on 2025-08-15 13:38:07
+Saved on 2025-10-05 21:33:55

@@ -1,8 +1,8 @@
 📊 Evaluation for LSTM
 ------------------------------
 MODEL : LSTM_MSFT
-MAE   : 6.3874
-MSE   : 52.8354
-RMSE  : 7.2688
+MAE   : 6.3813
+MSE   : 50.3191
+RMSE  : 7.0936
 
-Saved on 2025-08-15 13:36:23
+Saved on 2025-10-05 21:32:12

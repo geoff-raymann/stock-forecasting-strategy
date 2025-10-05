@@ -1,8 +1,8 @@
 📊 Evaluation for Prophet
 ------------------------------
 MODEL : Prophet_MSFT
-MAE   : 73.1317
-MSE   : 5555.6301
-RMSE  : 74.5361
+MAE   : 49.9066
+MSE   : 2575.2776
+RMSE  : 50.7472
 
-Saved on 2025-08-15 13:36:27
+Saved on 2025-10-05 21:32:16

@@ -1,8 +1,8 @@
 📊 Evaluation for LSTM
 ------------------------------
 MODEL : LSTM_PFE
-MAE   : 0.3166
-MSE   : 0.1833
-RMSE  : 0.4281
+MAE   : 0.3053
+MSE   : 0.2449
+RMSE  : 0.4949
 
-Saved on 2025-08-15 13:37:59
+Saved on 2025-10-05 21:33:48

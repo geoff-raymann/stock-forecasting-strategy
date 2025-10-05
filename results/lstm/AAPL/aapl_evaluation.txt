@@ -1,8 +1,8 @@
 📊 Evaluation for LSTM
 ------------------------------
 MODEL : LSTM_AAPL
-MAE   : 2.4608
-MSE   : 11.4769
-RMSE  : 3.3878
+MAE   : 3.5903
+MSE   : 20.1164
+RMSE  : 4.4851
 
-Saved on 2025-08-15 13:34:46
+Saved on 2025-10-05 21:30:34
