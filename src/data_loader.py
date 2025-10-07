@@ -7,6 +7,11 @@ import subprocess
 import logging
 import smtplib
 from email.message import EmailMessage
+import traceback
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # === CONFIG ===
 TICKERS = ['AAPL', 'MSFT', 'PFE', 'JNJ']  # Add more if needed
@@ -15,11 +20,11 @@ END_DATE = None  # Default = today
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 LOG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data_loader.log'))
 
-# === EMAIL SETTINGS (optional) ===
+# === EMAIL SETTINGS (use environment variables for secrets) ===
 ENABLE_EMAIL = True  # Set to True to enable email notifications
-EMAIL_FROM = 'odiwuorgeoff50@gmail.com'
-EMAIL_TO = 'odiwuorgeoff50@gmail.com'
-EMAIL_PASS = 'dnfl pnrj btzc cazu'  # Use an app password for Gmail
+EMAIL_FROM = os.environ.get('EMAIL_FROM', 'odiwuorgeoff50@gmail.com')
+EMAIL_TO = os.environ.get('EMAIL_TO', 'odiwuorgeoff50@gmail.com')
+EMAIL_PASS = os.environ.get('EMAIL_PASS', '')  # Set this in your environment or CI/CD secrets
 
 # === LOGGING SETUP ===
 logging.basicConfig(
@@ -32,7 +37,8 @@ logging.basicConfig(
 )
 
 def send_notification(subject, body):
-    if not ENABLE_EMAIL:
+    if not ENABLE_EMAIL or not EMAIL_PASS:
+        logging.info("Email notification skipped (disabled or missing password).")
         return
     msg = EmailMessage()
     msg.set_content(body)
@@ -67,14 +73,17 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-        subprocess.run(["python", "/home/geoff/Projects/stock-forecasting-strategy/src/batch_runner.py"], check=True)
+        # Use relative path for batch_runner.py
+        batch_runner_path = os.path.join(os.path.dirname(__file__), 'batch_runner.py')
+        subprocess.run(["python", batch_runner_path], check=True)
         send_notification(
             "Stock Data Loader Success",
             "Data loading and batch processing completed successfully."
         )
     except Exception as e:
         logging.exception("Script failed!")
+        tb = traceback.format_exc()
         send_notification(
             "Stock Data Loader Failure",
-            f"Script failed with error: {e}"
+            f"Script failed with error: {e}\n\nTraceback:\n{tb}"
         )

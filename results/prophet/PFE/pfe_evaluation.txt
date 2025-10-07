@@ -1,8 +1,8 @@
 📊 Evaluation for Prophet
 ------------------------------
 MODEL : Prophet_PFE
-MAE   : 1.2376
-MSE   : 2.7245
-RMSE  : 1.6506
+MAE   : 1.4117
+MSE   : 3.4979
+RMSE  : 1.8703
 
-Saved on 2025-10-05 21:33:51
+Saved on 2025-10-07 04:05:50

@@ -1,8 +1,8 @@
 📊 Evaluation for LSTM
 ------------------------------
 MODEL : LSTM_JNJ
-MAE   : 1.2699
-MSE   : 2.3012
-RMSE  : 1.5170
+MAE   : 1.1349
+MSE   : 2.0217
+RMSE  : 1.4219
 
-Saved on 2025-10-05 21:35:25
+Saved on 2025-10-07 04:07:31
